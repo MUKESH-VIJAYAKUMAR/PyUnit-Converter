@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6fb">
+  <meta name="description" content="Convert measurements with Convertly, a private offline unit converter.">
+  <title>Convertly — Unit Converter</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="conversion-data.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-lilac" aria-hidden="true"></div>
+  <div class="ambient ambient-mint" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Converter navigation">
+      <a class="brand" href="#top" aria-label="Convertly home">
+        <span class="brand-mark" aria-hidden="true">c</span>
+        <span class="brand-name">convertly<span class="brand-caption">UNITS, IN THEIR ELEMENT.</span></span>
+      </a>
+
+      <div class="nav-heading">
+        <span class="eyebrow">YOUR WORKSPACE</span>
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.5 4.5"></path></svg>
+          <input id="category-search" type="search" placeholder="Find a converter" autocomplete="off" aria-label="Search conversion categories">
+          <kbd>Ctrl K</kbd>
+        </label>
+      </div>
+
+      <nav id="category-list" class="category-list" aria-label="Conversion categories"></nav>
+
+      <div class="sidebar-bottom">
+        <div class="offline-badge"><span class="offline-dot"></span><span>Ready offline</span></div>
+        <div class="sidebar-note">Your conversions stay on this device.</div>
+      </div>
+    </aside>
+
+    <main id="top" class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong>Converter</strong></div>
+        <div class="topbar-actions">
+          <span class="privacy-pill"><span class="privacy-spark">✦</span> Private by design</span>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch color theme" title="Switch theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="page-intro" aria-labelledby="page-title">
+          <div>
+            <div class="intro-overline"><span class="overline-line"></span> PRECISION WITHOUT THE BUSYWORK</div>
+            <h1 id="page-title">Every unit,<br><span>in its element.</span></h1>
+            <p>Simple, thoughtful conversions for the things you measure every day.</p>
+          </div>
+          <div class="intro-art" aria-hidden="true">
+            <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+            <div class="art-chip chip-one">cm</div><div class="art-chip chip-two">kg</div><div class="art-chip chip-three">°C</div>
+            <div class="art-core">↗</div>
+          </div>
+        </section>
+
+        <div class="workspace-grid">
+          <section class="primary-column" aria-label="Unit converter">
+            <article class="converter-card panel">
+              <div class="converter-heading">
+                <div class="category-mark" id="category-icon" aria-hidden="true">↔</div>
+                <div class="category-heading-text">
+                  <div class="active-label">CURRENT CONVERTER</div>
+                  <h2 id="category-title">Length</h2>
+                  <p id="category-description">Distance and dimensions</p>
+                </div>
+                <div class="live-status"><span class="live-dot"></span> LIVE</div>
+              </div>
+
+              <div class="field-label-row"><label for="amount-input" class="field-label">VALUE TO CONVERT</label><span class="field-hint">Updates instantly</span></div>
+              <div class="amount-shell">
+                <input id="amount-input" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1" aria-label="Value to convert">
+                <span class="amount-unit-hint" id="source-hint">m</span>
+              </div>
+
+              <div class="unit-grid">
+                <label class="unit-field">
+                  <span class="field-label">FROM</span>
+                  <span class="select-shell"><select id="from-unit" aria-label="Convert from unit"></select><span class="select-chevron" aria-hidden="true">⌄</span></span>
+                </label>
+                <button id="swap-button" class="swap-button" type="button" aria-label="Swap units" title="Swap units">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13m0 0-4-4m4 4-4 4M17 17H4m0 0 4 4m-4-4 4-4"></path></svg>
+                </button>
+                <label class="unit-field">
+                  <span class="field-label">TO</span>
+                  <span class="select-shell"><select id="to-unit" aria-label="Convert to unit"></select><span class="select-chevron" aria-hidden="true">⌄</span></span>
+                </label>
+              </div>
+
+              <section class="result-card" aria-live="polite" aria-label="Conversion result">
+                <div class="result-decoration result-decoration-one" aria-hidden="true"></div>
+                <div class="result-decoration result-decoration-two" aria-hidden="true"></div>
+                <div class="result-topline"><span><span class="result-spark">✦</span> CONVERTED VALUE</span><button id="copy-button" class="copy-button" type="button"><span class="copy-icon" aria-hidden="true">▢</span> Copy result</button></div>
+                <div class="result-value-row"><output id="result-value">0.001</output><span id="result-symbol" class="result-symbol">km</span></div>
+                <div id="equation" class="equation">1 m = 0.001 km</div>
+              </section>
+
+              <div class="converter-footer">
+                <span id="conversion-status" class="conversion-status"><span class="status-check">✓</span> Conversion ready</span>
+                <button id="favorite-button" class="favorite-button" type="button"><span aria-hidden="true">☆</span> Save pair</button>
+              </div>
+            </article>
+
+            <section class="quick-panel panel" aria-labelledby="quick-title">
+              <div class="panel-heading">
+                <div><h3 id="quick-title">Popular pairs</h3><p>Common conversions, one click away.</p></div>
+                <span class="quick-heading-icon" aria-hidden="true">✳</span>
+              </div>
+              <div id="quick-pairs" class="quick-pairs"></div>
+            </section>
+          </section>
+
+          <aside class="activity-column" aria-label="Your conversion activity">
+            <section class="activity-panel panel" aria-labelledby="history-title">
+              <div class="panel-heading compact-heading">
+                <div class="heading-with-icon"><span class="small-heading-icon history-icon" aria-hidden="true">◷</span><div><h3 id="history-title">Recent conversions</h3><p>Your latest calculations.</p></div></div>
+                <button id="clear-history" class="text-button" type="button">Clear</button>
+              </div>
+              <div id="history-list" class="activity-list"></div>
+            </section>
+
+            <section class="activity-panel panel favorites-panel" aria-labelledby="favorites-title">
+              <div class="panel-heading compact-heading">
+                <div class="heading-with-icon"><span class="small-heading-icon favorite-icon" aria-hidden="true">★</span><div><h3 id="favorites-title">Saved pairs</h3><p>Quick access to your go-tos.</p></div></div>
+                <span id="favorite-count" class="count-badge">0</span>
+              </div>
+              <div id="favorites-list" class="activity-list"></div>
+            </section>
+
+            <div class="tip-card"><span class="tip-icon" aria-hidden="true">✦</span><div><strong>A small tip</strong><p>Use <kbd>Ctrl</kbd> + <kbd>K</kbd> to find any converter fast.</p></div></div>
+          </aside>
+        </div>
+
+        <footer class="page-footer"><span>Convertly <span class="footer-separator">·</span> Thoughtfully measured.</span><span>Works offline <span class="footer-separator">·</span> No account needed</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
